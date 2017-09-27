@@ -1,0 +1,9 @@
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\Comic.Data.Models.dll
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\Comic.Data.Models.pdb
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\obj\Debug\Comic.Data.Models.csproj.CoreCompileInputs.cache
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\obj\Debug\Comic.Data.Models.dll
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\obj\Debug\Comic.Data.Models.pdb
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\Dapper.dll
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\DapperExtensions.dll
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\Dapper.xml
+C:\Users\thierholzer\source\repos\ComicWebApp\Comic.Data.Models\bin\Debug\DapperExtensions.pdb

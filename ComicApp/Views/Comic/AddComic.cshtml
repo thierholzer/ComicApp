@@ -1,0 +1,17 @@
+﻿@model Comic.Data.Models.ComicBook
+@{
+    ViewBag.Title = "AddComic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Comic</h2>
+
+@using (Html.BeginForm("AddComic", "Comic", FormMethod.Post, new { id = "addComic" }))
+{
+    @Html.LabelFor(x=>x.Name)
+    @Html.TextBoxFor(x=>x.Name)
+    @Html.LabelFor(x=>x.Description)
+    @Html.TextBoxFor(x=>x.Description)
+
+    <input type="submit" value="submit" />
+}
