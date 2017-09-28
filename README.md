@@ -1,4 +1,12 @@
-# Test
+# ComicApp
 
-This is a test app. It's not completed...Just testing using GIT and a few other things...
-Test
+To Do: Internal Search Functionality.
+To Do: Error Handling
+To Do: UI
+To Do: Response Message
+
+Contains:
+Add New Comic
+Update Comic
+Delete Comic
+Browse/Filter Marvel API
