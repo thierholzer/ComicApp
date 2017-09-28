@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace Comic.Data.Dapper
@@ -33,15 +34,36 @@ namespace Comic.Data.Dapper
 
         }
 
+        public IEnumerable<T> Find<TValue>(Expression<Func<T, object>> expression, TValue value)
+        {
+            IEnumerable<T> list = Enumerable.Empty<T>();
+            using (IDbConnection _connection = new SqlConnection(_connectionString))
+            {
+                var p = Predicates.Field<T>(expression, Operator.Eq, value);
+                list = _connection.GetList<T>(p);
+                _connection.Close();
+            }
+            return list;
+        }
+
+        public IEnumerable<T> Get(PredicateGroup predicates)
+        {
+            if (predicates == null) throw new ArgumentNullException("predicates");
+            IEnumerable<T> list = Enumerable.Empty<T>();
+            using (IDbConnection _connection = new SqlConnection(_connectionString))
+            {
+                return _connection.GetList<T>(predicates);
+            }
+        }
+
         public IEnumerable<T> FindAll()
         {
             IEnumerable<T> list = Enumerable.Empty<T>();
             using (IDbConnection _connection = new SqlConnection(_connectionString))
             {
-                list = _connection.GetList<T>();
-                _connection.Close();
+                
+               return _connection.GetList<T>().ToArray();
             }
-            return list;
         }
 
         public T FindByID(string id)

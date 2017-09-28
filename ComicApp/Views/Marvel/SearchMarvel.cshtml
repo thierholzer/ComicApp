@@ -1,0 +1,65 @@
+﻿@model ComicApp.ViewModels.MarvelViewModel
+@using ComicApp.Models
+@{
+    ViewBag.Title = "SearchMarvel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search Marvel Comics</h2>
+
+<p>Fill out the search criteria below to look up Marvel Comics</p>
+
+@using (Html.BeginForm("SearchMarvel", "Marvel", FormMethod.Post, new { id = "searchMarvel" }))
+{
+    <h5>Filters</h5>
+    <div class="row">
+        <div class="col-md-3">
+            <label>Format:</label><br />
+            @Html.DropDownListFor(x => x.ComicSearchParams.Format, new SelectList(Model.ComicFormatOptions), new { id = "formatOptions", @placeholder = "Format" })<br />
+            <label>Format Type:</label><br />
+            @Html.DropDownListFor(x => x.ComicSearchParams.FormatType, new SelectList(Model.ComicFormatType), new { id = "formatType", @placeholder = "Format Type" })
+        </div>
+        <div class="col-md-4">
+            <label>Title:</label><br />
+                @Html.TextBoxFor(x => x.ComicSearchParams.Title)<br />
+            <label>Title Starts With:</label><br />
+                @Html.TextBoxFor(x => x.ComicSearchParams.TitleStartsWith)
+        </div>
+        <div class="col-md-4">
+            <label>Start Year:</label><br />
+            @Html.TextBoxFor(x => x.ComicSearchParams.StartYear, new { type = "number", step = 1, @placeholder = "Start Year", value = "" })<br />
+            <label>Issue Number:</label><br />
+            @Html.TextBoxFor(x => x.ComicSearchParams.IssueNumber, new { type = "number", step = "any", @placeholder = "Issue Number", value = "" })
+        </div>
+
+        <input type="submit" value="Search" class="btn btn-default" />
+    </div>
+}
+
+<div class="row">
+    @{
+        if (Model.MarvelComicsList != null)
+        {
+            foreach (MarvelComic comic in Model.MarvelComicsList)
+            {
+                <div class="col-md-6" style="min-height:150px;">
+                    <div class="col-md-3">
+                        @if (comic.Thumbnail.Path != "")
+                        {
+                            <img src="@string.Format("{0}.{1}",comic.Thumbnail.Path,comic.Thumbnail.Extension)" class="img-responsive thumbnail" />
+                        }
+                    </div>
+                    <ul class="col-md-9">
+                        <li>Title: @comic.Title</li>
+                        <li>Issue Number: @comic.IssueNumber</li>
+                        <li>Description: @comic.Description</li>
+                    </ul>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No results</p>
+        }
+    }
+</div>

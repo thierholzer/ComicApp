@@ -6,12 +6,27 @@
 
 <h2>Add Comic</h2>
 
-@using (Html.BeginForm("AddComic", "Comic", FormMethod.Post, new { id = "addComic" }))
+@using (Html.BeginForm("AddComic", "Comic", FormMethod.Post, new { id = "addComic"}))
 {
-    @Html.LabelFor(x=>x.Name)
-    @Html.TextBoxFor(x=>x.Name)
-    @Html.LabelFor(x=>x.Description)
-    @Html.TextBoxFor(x=>x.Description)
+    <div class="form-group row">
+        @Html.LabelFor(x => x.Name, new { @class="col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Name)
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(x => x.Description, new { @class = "col-sm-2 col-form-label" })
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Description)
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.LabelFor(x=>x.IssueNumber, new { @class="col-sm-2 col-form-label"})
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.IssueNumber, new { type = "number", step="any" })
+        </div>
+    </div>
 
-    <input type="submit" value="submit" />
+    <input type="submit" value="submit" id="btnAdd" />
 }
+

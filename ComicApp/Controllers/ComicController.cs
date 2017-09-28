@@ -1,20 +1,17 @@
 ﻿using ComicApp.Services;
 using Comic.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using ComicApp.ViewModels;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace ComicApp.Controllers
 {
     public class ComicController : Controller
     {
-        private ComicBook model;
+        private ComicBook model = new ComicBook();
         private readonly IComicService _service;
         public ComicController(IComicService service)
         {
-            model = new ComicBook();
             _service = service;
 
         }
@@ -28,79 +25,36 @@ namespace ComicApp.Controllers
         [HttpPost]
         public ActionResult AddComic(ComicBook comic)
         {
+            //TODO: Add Server Validation before initiating Save
             string result = _service.AddNewComic(comic).Result;
+
+            if(result != "ERROR")
+            {
+                model = new ComicBook();
+            }
+            else
+            {
+                model = comic;
+            }
             return View(model);
         }
-        // GET: Comic/Details/5
-        public ActionResult Details(int id)
+        
+        [HttpGet]
+        public ActionResult DeleteComic()
         {
-            return View();
+            ComicViewModel cvm = new ComicViewModel();
+            cvm.Comics = _service.GetAllComicBooks().Result.ToList();
+            return View(cvm);
         }
 
-        // GET: Comic/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Comic/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult DeleteComic(ComicViewModel submission)
         {
-            try
+            if(submission.SelectedComic != null)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                string result = _service.RemoveComic(submission.SelectedComic).Result;
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Comic/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Comic/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Comic/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Comic/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(new ComicViewModel());
         }
     }
 }

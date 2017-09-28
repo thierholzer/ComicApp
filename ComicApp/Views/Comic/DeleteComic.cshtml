@@ -1,0 +1,21 @@
+﻿@model ComicApp.ViewModels.ComicViewModel
+
+@{
+    ViewBag.Title = "DeleteComic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Comic</h2>
+
+
+@using (Html.BeginForm("DeleteComic", "Comic", FormMethod.Post, new { id = "deleteComic" }))
+{
+    <div class="form-group row">
+        <label class ="col-sm-2 col-form-label">Select a Comic Book:</label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(x=>x.SelectedComic.Id, new SelectList(Model.Comics,"Id","Name"),"Select a Comic", new { id="ddlComics"})
+        </div>
+    </div>
+    <input type="submit" value="submit" id="btnDelete" />
+}
+

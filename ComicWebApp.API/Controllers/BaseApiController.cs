@@ -43,6 +43,19 @@ namespace ComicWebApp.API.Controllers
 
             return Ok(result);
         }
+        /// <summary>
+        /// Get All
+        /// </summary>
+        /// <remarks>
+        /// Gets all of current model
+        /// </remarks>
+        /// <returns>IEnumerable of Type T</returns>
+        [Route("")]
+        [HttpGet]
+        public virtual IEnumerable<T> GetAll()
+        {
+            return _repository.FindAll();
+        }
 
         /// <summary>
         /// Adds new Entity Record
