@@ -10,12 +10,13 @@ namespace ComicApp.ViewModels
     {
         public string ResultsMsg;
         public List<ComicBook> Comics;
+        public int SelectedComicId;
         public ComicBook SelectedComic;
-
 
         public ComicViewModel()
         {
             Comics = new List<ComicBook>();
+            SelectedComic = new ComicBook();
         }
     }
 }

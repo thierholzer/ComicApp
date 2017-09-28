@@ -4,6 +4,7 @@ using ComicApp.ViewModels;
 using System.Web.Mvc;
 using System.Linq;
 
+
 namespace ComicApp.Controllers
 {
     public class ComicController : Controller
@@ -15,6 +16,7 @@ namespace ComicApp.Controllers
             _service = service;
 
         }
+        #region Add Comic
         // GET: Comic
         [HttpGet]
         public ActionResult AddComic()
@@ -26,6 +28,7 @@ namespace ComicApp.Controllers
         public ActionResult AddComic(ComicBook comic)
         {
             //TODO: Add Server Validation before initiating Save
+            //TODO: Add results Msg for Adding a New Comic
             string result = _service.AddNewComic(comic).Result;
 
             if(result != "ERROR")
@@ -38,7 +41,37 @@ namespace ComicApp.Controllers
             }
             return View(model);
         }
-        
+        #endregion Add Comic
+
+        #region Update Comic
+
+        [HttpGet]
+        public ActionResult UpdateComic()
+        {
+            ComicViewModel cvm = new ComicViewModel();
+            cvm.Comics = _service.GetAllComicBooks().Result.ToList();
+            return View(cvm);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateComic(ComicBook SelectedComic)
+        {
+            ComicViewModel cvm = new ComicViewModel();
+            cvm.SelectedComic = _service.UpdateComic(SelectedComic).Result;
+            if(cvm.SelectedComic.Id > 0)
+            {
+                cvm.ResultsMsg = SelectedComic.Name + " has been successfully updated to " + cvm.SelectedComic.Name;
+            }
+            else
+            {
+               //ToDo:Error Handling
+            }
+            cvm.Comics = _service.GetAllComicBooks().Result.ToList();
+            return View(cvm);
+        }
+        #endregion Update Comic
+
+        #region Delete Comic
         [HttpGet]
         public ActionResult DeleteComic()
         {
@@ -48,13 +81,25 @@ namespace ComicApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteComic(ComicViewModel submission)
+        public ActionResult DeleteComic(int SelectedComicId)
         {
-            if(submission.SelectedComic != null)
+            ComicViewModel cvm = new ComicViewModel();
+            //ToDo:Validation
+            //ToDo: Don't do look up just delete by id.
+
+            if(SelectedComicId > 0)
             {
-                string result = _service.RemoveComic(submission.SelectedComic).Result;
+                ComicBook cb = new ComicBook();
+                cb = _service.GetComicBookById(SelectedComicId).Result;
+                string result = _service.RemoveComic(cb).Result;
+
+                if(result == System.Net.HttpStatusCode.NoContent.ToString())
+                {
+                    cvm.ResultsMsg = cb.Name + " has been removed from your collection.";
+                }
             }
-            return View(new ComicViewModel());
+            return View(cvm);
         }
+        #endregion Delete Comic
     }
 }

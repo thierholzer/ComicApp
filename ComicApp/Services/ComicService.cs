@@ -41,6 +41,28 @@ namespace ComicApp.Services
             }
         }
 
+        public virtual async Task<ComicBook> UpdateComic(ComicBook comic)
+        {
+            String json = JsonConvert.SerializeObject(comic);
+            Uri updatecomic = new Uri(_comicURL + @"comicbook");
+            HttpResponseMessage response;
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            using (HttpClient client = new HttpClient())
+            {
+                /*client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _key);*/
+                response = await client.PutAsync(updatecomic, content).ConfigureAwait(false);
+            }
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return comic;
+            }
+            else
+            {
+                return new ComicBook();
+            }
+        }
+
         public async Task<string> RemoveComic(ComicBook comic)
         {
             Uri removeComic = new Uri(_comicURL + @"comicbook/" + comic.Id);
@@ -67,7 +89,18 @@ namespace ComicApp.Services
             return comics;
         }
 
-
+        public async Task<ComicBook> GetComicBookById(int id)
+        {
+            Uri getComicBook = new Uri(_comicURL + @"comicbook/" + id);
+            String json = String.Empty;
+            using (HttpClient client = new HttpClient())
+            {
+                /*client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _key);*/
+                json = await client.GetStringAsync(getComicBook).ConfigureAwait(false);
+            }
+            ComicBook comic = JsonConvert.DeserializeObject<ComicBook>(json);
+            return comic;
+        }
 
 
 

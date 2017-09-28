@@ -12,25 +12,26 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Select a Comic Book:</label>
         <div class="col-sm-10">
-            @Html.DropDownListFor(x => x.SelectedComic.Id, new SelectList(Model.Comics, "Id", "Name"), new { id = "ddlComics" })
+            @Html.DropDownListFor(x => x.SelectedComicId, new SelectList(Model.Comics, "Id", "Name"), "--Select--", new { id = "ddlComics", onchange = "getComicDetails()" })
         </div>
     </div>
+    @Html.HiddenFor(x=>x.SelectedComic.Id, new { id = "id" })
     <div class="form-group row">
-        @Html.LabelFor(x => x.SelectedComic.Name, new { @class = "col-sm-2 col-form-label" })
+        @Html.LabelFor(x => x.SelectedComic.Name, new { @class = "col-sm-2 col-form-label"})
         <div class="col-sm-10">
-            @Html.TextBoxFor(x => x.SelectedComic.Name)
+            @Html.TextBoxFor(x => x.SelectedComic.Name, new { id = "name" })
         </div>
     </div>
     <div class="form-group row">
         @Html.LabelFor(x => x.SelectedComic.Description, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-10">
-            @Html.TextBoxFor(x => x.SelectedComic.Description)
+            @Html.TextBoxFor(x => x.SelectedComic.Description, new { id="desc"})
         </div>
     </div>
     <div class="form-group row">
         @Html.LabelFor(x => x.SelectedComic.IssueNumber, new { @class = "col-sm-2 col-form-label" })
         <div class="col-sm-10">
-            @Html.TextBoxFor(x => x.SelectedComic.IssueNumber, new { type = "number", step = "any" })
+            @Html.TextBoxFor(x => x.SelectedComic.IssueNumber, new { type = "number", step = "any", id ="issue" })
         </div>
     </div>
     <input type="submit" value="submit" id="btnUpdate" />

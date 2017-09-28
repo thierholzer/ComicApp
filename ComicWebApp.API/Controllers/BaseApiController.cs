@@ -6,9 +6,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 namespace ComicWebApp.API.Controllers
 {
+    [EnableCors(origins: "*", headers:"*", methods:"*")]
     public abstract class BaseApiController<T> : ApiController where T : EntityBase
     {
         private readonly IRepository<T> _repository;
